@@ -2,6 +2,8 @@
 
 Requirements
 https://github.com/masonkulikowski/f25-cisc474-individual/blob/main/apps/docs/public/requirements.md<br>
+Site-Map:
+https://github.com/masonkulikowski/f25-cisc474-individual/blob/main/apps/docs/public/site-map.pdf<br>
 Wireframe:
 https://github.com/masonkulikowski/f25-cisc474-individual/blob/main/apps/docs/public/wireframe.pdf<br>
 Data Model: 
