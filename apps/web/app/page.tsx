@@ -1,70 +1,28 @@
-import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
-
-type Props = Omit<ImageProps, "src"> & {
-    srcLight: string;
-    srcDark: string;
-};
-
-const ThemeImage = (props: Props) => {
-    const { srcLight, srcDark, ...rest } = props;
-
-    return (
-        <>
-            <Image {...rest} src={srcLight} className="imgLight" />
-            <Image {...rest} src={srcDark} className="imgDark" />
-        </>
-    );
-};
+import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className={styles.page}>
-            <main className={styles.main}>
-                <h1>CISC474 Project Starter</h1>
-                <ol>
-                    <li>
-                        Get started by editing{" "}
-                        <code>apps/web/app/page.tsx</code>
-                    </li>
-                    <li>Save and see your changes instantly.</li>
-                </ol>
-
-                <Button appName="web" className={styles.secondary}>
-                    Open alert
-                </Button>
-            </main>
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Image
-                        aria-hidden
-                        src="/window.svg"
-                        alt="Window icon"
-                        width={16}
-                        height={16}
-                    />
-                    Examples
-                </a>
-                <a
-                    href="https://turborepo.com?utm_source=create-turbo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Image
-                        aria-hidden
-                        src="/globe.svg"
-                        alt="Globe icon"
-                        width={16}
-                        height={16}
-                    />
-                    Go to turborepo.com →
-                </a>
-            </footer>
+        <main style={{ padding: "1rem" }}>
+        <h1>Home</h1>
+        <div
+            style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+            gap: "1rem",
+            marginTop: "1rem",
+            }}
+        >
+            {[1, 2, 3, 4, 5].map((id) => (
+            <Link key={id} href="/course">
+                <div
+                style={{
+                    border: "1px solid #ccc",
+                    height: "120px",
+                }}
+                />
+            </Link>
+            ))}
         </div>
+        </main>
     );
 }
