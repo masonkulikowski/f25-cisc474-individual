@@ -1,11 +1,13 @@
 :root {
   --background: #ffffff;
-  --foreground: #ffffff;
+  --foreground: #1e3a8a;
+  --primary: #1d4ed8;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #ededed;
+  --background: #0a0a0a;
+  --foreground: #93c5fd;
+  --primary: #2563eb;
 }
 
 html,
