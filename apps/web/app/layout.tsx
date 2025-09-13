@@ -20,17 +20,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  month,
 }: Readonly<{
   children: React.ReactNode;
-  month?: string;
 }>) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header className={styles.header}>
           <nav className={styles.navBar}>
-            {month && <span className={styles.month}>{month}</span>}
             <Link href="/">Home</Link>
             <span className={styles.separator}></span>
             <Link href="/calendar">Calendar</Link>
