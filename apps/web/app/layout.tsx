@@ -4,10 +4,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import styles from "./layout.module.css";
 
-type HeaderProps = {
-  month?: string;
-}
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

@@ -1,23 +1,66 @@
-.main{
-    padding: 1rem;
-    color: aliceblue;
+.main {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #faf9f6;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  padding: 2rem;
+  font-family: var(--font-geist-sans, 'Monaco', monospace);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
+
 .title {
-  margin-top: 1rem;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.dueDate {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 1rem;
 }
 
 .description {
-  margin-top: 1rem;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #444;
 }
 
 .upload {
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .button {
-  margin-top: 1rem;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: #217dbb;
 }
 
 .viewLink {
   margin-top: 1rem;
+}
+
+.viewLink a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.viewLink a:hover {
+  text-decoration: underline;
 }

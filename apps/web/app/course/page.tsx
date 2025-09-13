@@ -1,20 +1,23 @@
+
 import Link from "next/link";
+import styles from "./course.module.css";
 
 export default function Course() {
+
   return (
-    <main style={{ padding: "1rem" }}>
-      <h1>Advanced Web Technologies - CISC474</h1>
-      <p>Dr. Austin Bart</p>
-      <p>MWF 12:30-1:35</p>
-      <p>Sharp 140</p>
-      <section style={{ marginTop: "1rem" }}>
-        <h2>Upcoming</h2>
-        <ul>
-          <li>
-            <Link href="/assignment">Web App Planning - 9/9</Link>
+    <main className={styles.main}>
+      <h1 className={styles.title}>Advanced Web Technologies - CISC474</h1>
+      <p className={styles.instructor}>Dr. Austin Bart</p>
+      <p className={styles.schedule}>MWF 12:30-1:35</p>
+      <p className={styles.location}>Sharp 140</p>
+      <section className={styles.section}>
+        <h2 className={styles.upcoming}>Upcoming</h2>
+        <ul className={styles.list}>
+          <li className={styles.listItem}>
+            <Link href="/assignment" className={styles.link}>Web App Planning - 9/9</Link>
           </li>
-          <li>
-            <Link href="/assignment">NextJS Learning - 9/10</Link>
+          <li className={styles.listItem}>
+            <Link href="/assignment" className={styles.link}>NextJS Learning - 9/10</Link>
           </li>
         </ul>
       </section>

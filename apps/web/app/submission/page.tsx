@@ -1,26 +1,23 @@
+import styles from "./submission.module.css";
+
 export default function Submission() {
   const submissions = [
     { name: "Your submission" },
     { name: "Dan's submission" },
   ];
   return (
-    <main style={{ padding: "1rem" }}>
+    <main className={styles.main}>
       <h1>NextJS Learning</h1>
-      <h2 style={{ marginTop: "1rem" }}>Submissions</h2>
-      <ul style={{ listStyle: "none", padding: 0, marginTop: "1rem" }}>
+      <h2>Submissions</h2>
+      <ul className={styles.list}>
         {submissions.map((s, idx) => (
-          <li
-            key={idx}
-            style={{
-              border: "1px solid #ccc",
-              padding: "0.5rem",
-              marginBottom: "0.5rem",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>{s.name}</span>
-            <button>Comments</button>
+          <li key={idx} className={styles.listItem}>
+            <div className={styles.submissionHeader}>
+              <span>{s.name}</span>
+            </div>
+            <div className={styles.commentsBar}>
+              <button className={styles.commentsButton}>Comments</button>
+            </div>
           </li>
         ))}
       </ul>
