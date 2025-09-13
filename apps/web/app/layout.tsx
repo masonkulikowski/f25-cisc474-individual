@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import localFont from "next/font/local";
 import "./globals.css";
+import styles from "./layout.module.css";
+
+type HeaderProps = {
+  month?: string;
+}
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,25 +24,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  month,
 }: Readonly<{
   children: React.ReactNode;
+  month?: string;
 }>) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "1rem",
-            borderBottom: "1px solid #ccc",
-          }}
-        >
-          <nav style={{ display: "flex", gap: "1rem" }}>
+        <header className={styles.header}>
+          <nav className={styles.navBar}>
+            {month && <span className={styles.month}>{month}</span>}
             <Link href="/">Home</Link>
+            <span className={styles.separator}></span>
             <Link href="/calendar">Calendar</Link>
           </nav>
-          <span>Mason</span>
+          <span className={styles.user}>Mason</span>
         </header>
         {children}
       </body>

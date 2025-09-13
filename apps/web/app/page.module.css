@@ -1,3 +1,20 @@
+.courseLink {
+  width: 240px;
+  height: 320px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: transform 0.2s;
+  color: #000;
+  font-family: 'Monaco', monospace;
+}
+
+.courseLink:hover {
+  transform: scale(1.05);
+}
 .page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
