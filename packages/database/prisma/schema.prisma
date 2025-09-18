@@ -13,87 +13,87 @@ generator client {
 }
 
 model Users {
-  id           String   @id @default(uuid())
-  role         String
-  first_name   String
-  last_name    String
-  email        String   @unique
-  password     String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  users_id    String   @id @default(uuid())
+  role        String
+  first_name  String
+  last_name   String
+  email       String   @unique
+  password    String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
-  courses      Courses[]
-  submissions  Submissions[]
-  comments     Comments[]
-  sections     Sections[]
+  courses     Courses[]
+  sections    Sections[]
+  submissions Submissions[]
+  comments    Comments[]
 }
 
 model Courses {
-  id           String   @id @default(uuid())
-  users_id     String
-  section_id   String
-  course_name  String
-  course_desc  String?
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  course_id   String   @id @default(uuid())
+  users_id    String
+  section_id  String
+  course_name String
+  course_desc String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
-  user         Users    @relation(fields: [users_id], references: [id])
-  section      Sections @relation(fields: [section_id], references: [id])
-  assignments  Assignments[]
+  user        Users     @relation(fields: [users_id], references: [users_id])
+  section     Sections  @relation(fields: [section_id], references: [section_id])
+  assignments Assignments[]
 }
 
 model Sections {
-  id           String   @id @default(uuid())
+  section_id   String   @id @default(uuid())
   course_id    String
   users_id     String
   section_code String
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  course       Courses  @relation(fields: [course_id], references: [id])
-  user         Users    @relation(fields: [users_id], references: [id])
+  course       Courses  @relation(fields: [course_id], references: [course_id])
+  user         Users    @relation(fields: [users_id], references: [users_id])
 }
 
 model Assignments {
-  id           String   @id @default(uuid())
-  courses_id   String
-  assign_name  String
-  assign_desc  String?
-  assign_files Bytes?
-  due_date     DateTime
-  created_date DateTime @default(now())
-  completed    Boolean  @default(false)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  assign_id     String   @id @default(uuid())
+  courses_id    String
+  assign_name   String
+  assign_desc   String
+  assign_files  Bytes?
+  due_date      DateTime
+  created_date  DateTime @default(now())
+  completed     Boolean  @default(false)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 
-  course       Courses  @relation(fields: [courses_id], references: [id])
-  submissions  Submissions[]
+  course        Courses      @relation(fields: [courses_id], references: [course_id])
+  submissions   Submissions[]
 }
 
 model Submissions {
-  id              String   @id @default(uuid())
+  submission_id   String   @id @default(uuid())
   assign_id       String
   user_id         String
   submission_file Bytes?
   submission_desc String?
-  submission_time DateTime @default(now())
+  submission_time DateTime
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  assignment      Assignments @relation(fields: [assign_id], references: [id])
-  user            Users      @relation(fields: [user_id], references: [id])
+  assignment      Assignments @relation(fields: [assign_id], references: [assign_id])
+  user            Users      @relation(fields: [user_id], references: [users_id])
   comments        Comments[]
 }
 
 model Comments {
-  id              String   @id @default(uuid())
+  comment_id      String   @id @default(uuid())
   submission_id   String
   user_id         String
   comment_desc    String
-  comment_time    DateTime @default(now())
+  comment_time    DateTime
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  submission      Submissions @relation(fields: [submission_id], references: [id])
-  user            Users      @relation(fields: [user_id], references: [id])
+  submission      Submissions @relation(fields: [submission_id], references: [submission_id])
+  user            Users      @relation(fields: [user_id], references: [users_id])
 }
