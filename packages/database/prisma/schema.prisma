@@ -24,6 +24,7 @@ model Users {
 
   courses     Courses[]
   submissions Submissions[]
+  sections    Sections[]
   comments    Comments[]
 }
 
