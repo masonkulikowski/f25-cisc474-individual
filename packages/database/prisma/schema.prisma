@@ -37,8 +37,8 @@ model Courses {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  user         Users    @relation(fields: [users_id], references: [users_id])
-  section      Sections @relation(fields: [section_id], references: [section_id])
+  user         Users    @relation(fields: [users_id], references: [id])
+  section      Sections @relation(fields: [section_id], references: [id])
   assignments  Assignments[]
 }
 
@@ -50,8 +50,8 @@ model Sections {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  course       Courses  @relation(fields: [course_id], references: [course_id])
-  user         Users    @relation(fields: [users_id], references: [users_id])
+  course       Courses  @relation(fields: [course_id], references: [id])
+  user         Users    @relation(fields: [users_id], references: [id])
 }
 
 model Assignments {
@@ -80,8 +80,8 @@ model Submissions {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  assignment      Assignments @relation(fields: [assign_id], references: [assign_id])
-  user            Users      @relation(fields: [user_id], references: [users_id])
+  assignment      Assignments @relation(fields: [assign_id], references: [id])
+  user            Users      @relation(fields: [user_id], references: [id])
   comments        Comments[]
 }
 
@@ -94,6 +94,6 @@ model Comments {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  submission      Submissions @relation(fields: [submission_id], references: [submission_id])
-  user            Users      @relation(fields: [user_id], references: [users_id])
+  submission      Submissions @relation(fields: [submission_id], references: [id])
+  user            Users      @relation(fields: [user_id], references: [id])
 }
