@@ -66,7 +66,7 @@ model Assignments {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  course       Courses  @relation(fields: [courses_id], references: [course_id])
+  course       Courses  @relation(fields: [courses_id], references: [id])
   submissions  Submissions[]
 }
 
