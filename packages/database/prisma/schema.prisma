@@ -13,7 +13,7 @@ generator client {
 }
 
 model Users {
-  users_id    String   @id @default(uuid())
+  id    String   @id @default(uuid())
   role        String
   first_name  String
   last_name   String
@@ -23,56 +23,55 @@ model Users {
   updated_at  DateTime @updatedAt
 
   courses     Courses[]
-  sections    Sections[]
   submissions Submissions[]
   comments    Comments[]
 }
 
 model Courses {
-  course_id   String   @id @default(uuid())
+  id          String   @id @default(uuid())
+  user        Users    @relation(fields: [users_id], references: [id])
   users_id    String
-  section_id  String
   course_name String
   course_desc String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  user        Users     @relation(fields: [users_id], references: [users_id])
-  section     Sections  @relation(fields: [section_id], references: [section_id])
   assignments Assignments[]
+  sections    Sections[]
 }
 
 model Sections {
-  section_id   String   @id @default(uuid())
+  id           String   @id @default(uuid())
+  course       Courses  @relation(fields: [course_id], references: [id])
   course_id    String
+  user         Users    @relation(fields: [users_id], references: [id])
   users_id     String
   section_code String
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  course       Courses  @relation(fields: [course_id], references: [course_id])
-  user         Users    @relation(fields: [users_id], references: [users_id])
 }
 
 model Assignments {
-  assign_id     String   @id @default(uuid())
+  id            String   @id @default(uuid())
+  course        Courses  @relation(fields: [courses_id], references: [id])
   courses_id    String
   assign_name   String
   assign_desc   String
   assign_files  Bytes?
   due_date      DateTime
-  created_date  DateTime @default(now())
   completed     Boolean  @default(false)
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 
-  course        Courses      @relation(fields: [courses_id], references: [course_id])
   submissions   Submissions[]
 }
 
 model Submissions {
-  submission_id   String   @id @default(uuid())
+  id              String   @id @default(uuid())
+  assignment      Assignments @relation(fields: [assign_id], references: [id])
   assign_id       String
+  user            Users      @relation(fields: [user_id], references: [id])
   user_id         String
   submission_file Bytes?
   submission_desc String?
@@ -80,20 +79,18 @@ model Submissions {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  assignment      Assignments @relation(fields: [assign_id], references: [assign_id])
-  user            Users      @relation(fields: [user_id], references: [users_id])
   comments        Comments[]
 }
 
 model Comments {
-  comment_id      String   @id @default(uuid())
+  id      String   @id @default(uuid())
+  submission      Submissions @relation(fields: [submission_id], references: [id])
   submission_id   String
+  user            Users      @relation(fields: [user_id], references: [id])
   user_id         String
   comment_desc    String
   comment_time    DateTime
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
-  submission      Submissions @relation(fields: [submission_id], references: [submission_id])
-  user            Users      @relation(fields: [user_id], references: [users_id])
 }
