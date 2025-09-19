@@ -13,8 +13,8 @@ generator client {
 }
 
 model Users {
-  id    String   @id @default(uuid())
-  role        String
+  id          String   @id @default(uuid())
+  role        Role     @default(STUDENT)
   first_name  String
   last_name   String
   email       String   @unique
@@ -94,4 +94,11 @@ model Comments {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 
+}
+
+enum Role {
+  STUDENT
+  PROFESSOR
+  ADMIN
+  TA
 }

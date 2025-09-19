@@ -21,7 +21,7 @@ async function main() {
     const last = faker.person.lastName();
     const user = await prisma.users.create({
       data: {
-        role: "professor",
+        role: "PROFESSOR",
         first_name: first,
         last_name: last,
         email: uniqueEmail(first, last),
@@ -36,7 +36,7 @@ async function main() {
     const last = faker.person.lastName();
     const user = await prisma.users.create({
       data: {
-        role: "student",
+        role: "STUDENT",
         first_name: first,
         last_name: last,
         email: uniqueEmail(first, last),
