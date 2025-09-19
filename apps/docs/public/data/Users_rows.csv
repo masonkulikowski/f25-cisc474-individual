@@ -1,16 +1,11 @@
-id,role,first_name,last_name,email,password,created_at,updated_at
-0c24295d-72d8-4b8a-b9ab-8397aa83f061,student,Nikolas,Quitzon,Bethany_Wiegand3@yahoo.com,4zwqqSgOKpkCHux,2025-09-18 18:55:13.234,2025-09-18 18:55:13.234
-43a8e704-1ea7-4754-93b2-f19363ae9140,student,Jaren,Flatley,jaren.flatley.y4dwak@example.edu,TEajwAEVwNNbm8x,2025-09-18 19:03:04.886,2025-09-18 19:03:04.886
-5422c20f-c4bf-4416-9a68-e798edbffeb0,professor,Marlon,Robel,marlon.robel.991duk@example.edu,wO_6RobrLgQkHn0,2025-09-18 19:03:04.681,2025-09-18 19:03:04.681
-55963c19-c0cd-4861-bed4-7392a569b0e2,student,Lisa,Dach,lisa.dach.vyjx2g@example.edu,xSiQ8tM0Vc4vWbH,2025-09-18 19:03:05.085,2025-09-18 19:03:05.085
-62589d0a-1e7d-473d-a034-8eb7d01cae5e,student,Braeden,Watsica,braeden.watsica.epv7c3@example.edu,o02DzxCJD8_Z_X9,2025-09-18 19:03:05.398,2025-09-18 19:03:05.398
-90badeb3-9b77-4cc6-a94d-83f54ac064e8,student,Annabell,Predovic,annabell.predovic.nzrr4x@example.edu,eeBs2T61Nf0E2Th,2025-09-18 19:03:05.294,2025-09-18 19:03:05.294
-950f1ba0-73e6-4cde-96ac-233dbbca40c9,student,Reginald,Rice,reginald.rice.zudmvs@example.edu,BJ0_LwcCobYPMcg,2025-09-18 19:03:05.007,2025-09-18 19:03:05.007
-9f203527-4510-4805-9c4d-f7c298135464,professor,Nasir,McClure,Soledad74@hotmail.com,0AKFnWzJ5uks7FT,2025-09-18 18:55:12.925,2025-09-18 18:55:12.925
-a6dbbc23-130c-451d-9b3f-ab40d0de8f5b,student,Israel,Pouros,israel.pouros.eb44ui@example.edu,UwOid69rNFi37DZ,2025-09-18 19:03:04.74,2025-09-18 19:03:04.74
-aa30946a-8241-4425-8be7-3b994a527282,student,Alvera,Rau,Brandy66@hotmail.com,Svq7bI1lv8AYztt,2025-09-18 18:55:13.334,2025-09-18 18:55:13.334
-be7a739c-2d6a-45bf-9a93-1104a259de28,professor,Beaulah,Gibson,Kavon78@hotmail.com,BRn6NxabIygavxd,2025-09-18 18:55:13.132,2025-09-18 18:55:13.132
-d0626640-d07b-41d6-90fd-9ddc57489295,student,Zora,Kassulke,zora.kassulke.zixbaj@example.edu,RAC61FxjNBrsYOf,2025-09-18 19:03:04.956,2025-09-18 19:03:04.956
-da651daa-5f59-4908-bfb7-259a412cc43a,student,Amara,Cremin,amara.cremin.z27vdq@example.edu,zRywVKBcblhSM_b,2025-09-18 19:03:05.193,2025-09-18 19:03:05.193
-ecd81923-2ac0-443b-894d-7c94bb5cf3d1,professor,Jared,Bailey,jared.bailey.vcirys@example.edu,ySJiubVfNiy6m7Q,2025-09-18 19:03:04.474,2025-09-18 19:03:04.474
-f71a427d-dbf8-4afd-8f0d-69e0a02bc6b7,professor,Bobby,Johnston,Mckenna.Kerluke@yahoo.com,Szr9wdLKDUmduAW,2025-09-18 18:55:13.439,2025-09-18 18:55:13.439
+id,first_name,last_name,email,password,created_at,updated_at,role
+21b28ea1-e1bc-401f-b678-dd698ad1cb9c,Arnoldo,Streich,arnoldo.streich.tsgnfo@example.edu,sQiws4a6xXUdx3U,2025-09-19 20:09:17.101,2025-09-19 20:09:17.101,STUDENT
+7156a02f-fae4-40cc-b1cf-21099a5d178e,Cali,Bahringer,cali.bahringer.evaimm@example.edu,PIfnrlAB0byN8Lw,2025-09-19 20:09:16.927,2025-09-19 20:09:16.927,STUDENT
+77b201cc-654d-4018-8d17-ab96b4ece757,Erwin,Waters,erwin.waters.e4zivs@example.edu,2W_w8eThIouTaGs,2025-09-19 20:09:16.999,2025-09-19 20:09:16.999,STUDENT
+a6c3fdc8-48a9-4170-a04d-cd52bfabfb0f,Fae,Lindgren,fae.lindgren.4zmwvs@example.edu,JrMNyxpk0k8sP8S,2025-09-19 20:09:16.798,2025-09-19 20:09:16.798,STUDENT
+bb8c36df-77b3-49c4-b2a2-e7fa6ce6d66e,Jaylin,Gutkowski,jaylin.gutkowski.4kh0wi@example.edu,7_aguVvTIW1OoQY,2025-09-19 20:09:16.634,2025-09-19 20:09:16.634,PROFESSOR
+d0870a5f-5c27-441b-8fd1-25a0faffaf50,Zackery,Mayer,zackery.mayer.rnimwz@example.edu,H75A8cCo_CxMfTK,2025-09-19 20:09:16.899,2025-09-19 20:09:16.899,STUDENT
+d4455555-ef15-4d48-9ffe-ff84d38dc2b2,Dorothea,Abbott,dorothea.abbott.nx34yf@example.edu,nly5zwBu2QQkskS,2025-09-19 20:09:17.032,2025-09-19 20:09:17.032,STUDENT
+de763d13-69d4-4364-a2c0-f3fb02596459,Nikki,Schroeder,nikki.schroeder.e1mceq@example.edu,jCeVM1udW6GSHR2,2025-09-19 20:09:16.52,2025-09-19 20:09:16.52,PROFESSOR
+e463bcb7-b75c-4370-a812-5aa472e1db70,Madge,Dooley,madge.dooley.zs3nwe@example.edu,g0IGXUKLPF4NybP,2025-09-19 20:09:17.203,2025-09-19 20:09:17.203,STUDENT
+eff8268d-3d21-47b2-8d94-bc9fed474960,Nick,Brakus,nick.brakus.s5anxk@example.edu,LAxtSoPgKwP_Y8B,2025-09-19 20:09:16.665,2025-09-19 20:09:16.665,STUDENT
