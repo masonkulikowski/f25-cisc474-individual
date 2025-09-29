@@ -3,16 +3,26 @@ import { AppService } from './app.service';
 import { UserService } from './users/users.service';
 import { CourseService } from './courses/courses.service';
 import { AssignmentsService } from './assignments/assignments.service';
+import { SectionsService } from './sections/sections.service';
+import { SubmissionsService } from './submissions/submissions.service';
+import { CommentsService } from './comments/comments.service';
 import { Users as UsersModel } from '@repo/database';
 import { Courses as CoursesModel } from '@repo/database';
 import { Assignments as AssignmentsModel } from '@repo/database';
+import { Sections as SectionsModel } from '@repo/database';
+import { Submissions as SubmissionsModel } from '@repo/database';
+import { Comments as CommentsModel } from '@repo/database';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, 
+  constructor(
+    private readonly appService: AppService,
     private readonly userService: UserService,
     private readonly courseService: CourseService,
     private readonly assignmentsService: AssignmentsService,
+    private readonly sectionsService: SectionsService,
+    private readonly submissionsService: SubmissionsService,
+    private readonly commentsService: CommentsService,
   ) {}
 
   @Get()
@@ -48,5 +58,35 @@ export class AppController {
   @Get('assignments/:id')
   async getAssignmentsByUuid(@Param('id') id: string): Promise<AssignmentsModel[]> {
     return this.assignmentsService.findAllByUuid(id);
+  }
+
+  @Get('sections')
+  async getSections(): Promise<SectionsModel[]> {
+    return this.sectionsService.findAll();
+  }
+
+  @Get('sections/:id')
+  async getSectionsByUuid(@Param('id') id: string): Promise<SectionsModel[]> {
+    return this.sectionsService.findAllByUuid(id);
+  }
+
+  @Get('submissions')
+  async getSubmissions(): Promise<SubmissionsModel[]> {
+    return this.submissionsService.findAll();
+  }
+
+  @Get('submissions/:id')
+  async getSubmissionsByUuid(@Param('id') id: string): Promise<SubmissionsModel[]> {
+    return this.submissionsService.findAllByUuid(id);
+  }
+
+  @Get('comments')
+  async getComments(): Promise<CommentsModel[]> {
+    return this.commentsService.findAll();
+  }
+
+  @Get('comments/:id')
+  async getCommentsByUuid(@Param('id') id: string): Promise<CommentsModel[]> {
+    return this.commentsService.findAllByUuid(id);
   }
 }
