@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./course.module.css";
 
 export default function Course() {
-  const router = useRouter();
-  const { id: courseId } = router.query;
+  const searchParams = useSearchParams();
+  const courseId = searchParams.get("id");
   const [course, setCourse] = useState<{ name: string; desc: string } | null>(null);
 
   useEffect(() => {
