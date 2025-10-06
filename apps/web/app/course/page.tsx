@@ -30,7 +30,11 @@ function CourseContent() {
           throw new Error(`Failed to fetch course: ${res.status} ${res.statusText}`);
         }
         const data = await res.json();
-        setCourse({ name: data.course_name, desc: data.course_desc });
+        if (Array.isArray(data) && data.length > 0) {
+          setCourse({ name: data[0].course_name, desc: data[0].course_desc });
+        } else {
+          setError("Course data is not available.");
+        }
       } catch (error) {
         console.error(error);
         setError("Failed to load course details. Please try again later.");
@@ -41,6 +45,9 @@ function CourseContent() {
 
     fetchCourse();
   }, [courseId]);
+
+  useEffect(() => {
+  }, [course]);
 
   if (loading) {
     return <p>Loading course details...</p>;

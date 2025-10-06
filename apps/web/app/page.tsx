@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Course = {
     id: string;
