@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import styles from "./course.module.css";
 
 interface Course {
@@ -10,7 +10,7 @@ interface Course {
   desc: string;
 }
 
-export default function Course() {
+function CourseContent() {
   const searchParams = useSearchParams();
   const courseId = searchParams.get("id");
   const [course, setCourse] = useState<Course | null>(null);
@@ -70,5 +70,13 @@ export default function Course() {
         </ul>
       </section>
     </main>
+  );
+}
+
+export default function Course() {
+  return (
+    <Suspense fallback={<p>Loading search parameters...</p>}>
+      <CourseContent />
+    </Suspense>
   );
 }
