@@ -1,6 +1,5 @@
 import { Controller, Get, Module } from '@nestjs/common';
 import { AssignmentsService } from './assignments.service';
-import { PrismaService } from '../prisma.service';
 
 @Controller('assignments')
 export class AssignmentsController {
@@ -14,7 +13,7 @@ export class AssignmentsController {
 
 @Module({
   controllers: [AssignmentsController],
-  providers: [AssignmentsService, PrismaService],
+  providers: [AssignmentsService],
   exports: [AssignmentsService],
 })
 export class AssignmentsModule {}

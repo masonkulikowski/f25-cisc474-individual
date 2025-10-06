@@ -7,11 +7,12 @@ import { AssignmentsModule } from './assignments/assignments.module';
 import { SubmissionsModule } from './submissions/submissions.module';
 import { SectionsModule } from './sections/sections.module';
 import { CommentsModule } from './comments/comments.module';
+import { PrismaModule } from './prisma.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 
 @Module({
-  imports: [LinksModule, UsersModule, CoursesModule, AssignmentsModule, SubmissionsModule, SectionsModule, CommentsModule],
+  imports: [LinksModule, UsersModule, CoursesModule, AssignmentsModule, SubmissionsModule, SectionsModule, CommentsModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })
