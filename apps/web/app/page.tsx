@@ -50,7 +50,7 @@ function createResource<T>(promise: Promise<T>) {
     };
 }
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 async function fetchCourses(): Promise<Course[]> {
     try {
