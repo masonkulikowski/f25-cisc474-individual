@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import styles from "./page.module.css";
 import { Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
 
 type Course = {
     id: string;
@@ -73,6 +73,7 @@ async function fetchCourses(): Promise<Course[]> {
 function CoursesGrid({ resource }: { resource: { read: () => Course[] } }) {
     const courses = resource.read();
     const [colors, setColors] = useState<string[] | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         const usedColors = new Set<string>();
@@ -96,14 +97,14 @@ function CoursesGrid({ resource }: { resource: { read: () => Course[] } }) {
             }}
         >
             {courses.map((course, index) => (
-                <Link key={course.id} href={`/course`}>
-                    <div
-                        className={styles.courseLink}
-                        style={{ background: colors[index] }}
-                    >
-                        {course.name}
-                    </div>
-                </Link>
+                <div
+                    key={course.id}
+                    className={styles.courseLink}
+                    style={{ background: colors[index] }}
+                    onClick={() => router.push(`/course?id=${course.id}`)}
+                >
+                    {course.name}
+                </div>
             ))}
         </div>
     );
