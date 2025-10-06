@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import styles from "./course.module.css";
+import styles from "course.module.css";
 
 export default function Course() {
   const router = useRouter();
