@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const FRONTEND_URL = process.env.FRONTEND_URL;
+  const FRONTEND_URL = process.env.FRONTEND_URL_2;
 
   app.enableCors({
     origin: (origin, callback) => {
