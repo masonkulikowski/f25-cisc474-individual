@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Route } from "../routes/courses/$courseId";
 import { backendFetcher } from "../integrations/fetcher";
 import styles from "./course.module.css";
 
@@ -10,48 +11,40 @@ type Course = {
 };
 
 function CourseContent() {
+  const { courseId } = Route.useParams();
   const [course, setCourse] = useState<Course | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const handleNavigation = () => {
-      const pathSegments = window.location.pathname.split("/");
-      const courseId = pathSegments[pathSegments.length - 1];
+    if (!courseId) {
+      setErrorMessage("Course ID is missing.");
+      setLoading(false);
+      return;
+    }
 
-      if (!courseId) {
-        setErrorMessage("Course ID is missing.");
-        setLoading(false);
-        return;
-      }
+    async function fetchCourse() {
+      try {
+        const fetchCourseData = backendFetcher<Array<{ course_name: string; course_desc: string }>>(`/courses/${courseId}`);
+        const data = await fetchCourseData();
 
-      async function fetchCourse() {
-        try {
-          const fetchCourseData = backendFetcher<{ course_name: string; course_desc: string }>(`/courses/${courseId}`);
-          const data = await fetchCourseData();
-          console.log("API response data:", data);
-
-          const updatedCourse = { name: data.course_name, desc: data.course_desc };
+        if (data.length > 0 && data[0]) {
+          const updatedCourse = { name: data[0].course_name, desc: data[0].course_desc };
           setCourse(updatedCourse);
-          console.log("Updated course state:", updatedCourse);
-        } catch (fetchError) {
-          console.error(fetchError);
-          setErrorMessage("Failed to load course details. Please try again later.");
-        } finally {
-          setLoading(false);
+        } else {
+          console.error("No course data found in API response.");
+          setErrorMessage("No course details available.");
         }
+      } catch (fetchError) {
+        console.error(fetchError);
+        setErrorMessage("Failed to load course details. Please try again later.");
+      } finally {
+        setLoading(false);
       }
+    }
 
-      fetchCourse();
-    };
-
-    handleNavigation();
-
-    window.addEventListener("popstate", handleNavigation);
-    return () => {
-      window.removeEventListener("popstate", handleNavigation);
-    };
-  }, []);
+    fetchCourse();
+  }, [courseId]);
 
   if (loading) {
     return <p>Loading course details...</p>;
