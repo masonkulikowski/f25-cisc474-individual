@@ -55,6 +55,7 @@ function createResource<T>(promise: Promise<T>) {
     };
 }
 
+console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
 const fetchCourses = backendFetcher<Array<{ id: string; course_name: string }>>("/courses");
 
 async function transformCourses(): Promise<Array<Course>> {
