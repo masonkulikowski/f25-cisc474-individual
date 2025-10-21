@@ -1,12 +1,24 @@
 "use client";
 
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useMemo, useState } from "react";
 import { backendFetcher } from "../integrations/fetcher";
 import styles from "./page.module.css";
+import type { CourseOut } from "@repo/api/courses";
+
+
+const coursesQueryOptions = {
+    queryKey: ['courses'],
+    queryFn: backendFetcher<Array<CourseOut>>(`/courses`),
+    initialData: [],
+}
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
+  loader: ({ context: { queryClient } }) => {
+    queryClient.ensureQueryData(coursesQueryOptions);
+  }
 });
 
 type Course = {
@@ -26,47 +38,7 @@ function getRandomColor(usedColors: Set<string>) {
     return color;
 }
 
-function createResource<T>(promise: Promise<T>) {
-    let status = "pending";
-    let result: T;
-    let error: unknown;
-
-    const suspender = promise.then(
-        (res) => {
-            status = "success";
-            result = res;
-        },
-        (err) => {
-            status = "error";
-            error = err;
-            console.error(err);
-        }
-    );
-    return {
-        read(): T {
-            if (status === "pending") {
-                throw suspender;
-            }
-            if (status === "error") {
-                throw error;
-            }
-            return result!;
-        },
-    };
-}
-
-const fetchCourses = backendFetcher<Array<{ id: string; course_name: string }>>("/courses");
-
-async function transformCourses(): Promise<Array<Course>> {
-    const data = await fetchCourses();
-    return data.map((course) => ({
-        id: course.id,
-        name: course.course_name,
-    }));
-}
-
-function CoursesGrid({ resource }: { resource: { read: () => Array<Course> } }) {
-    const courses = resource.read();
+function CoursesGrid({ courses }: { courses: Array<Course> }) {
     const [colors, setColors] = useState<Array<string> | null>(null);
     const navigate = useNavigate();
 
@@ -91,7 +63,7 @@ function CoursesGrid({ resource }: { resource: { read: () => Array<Course> } }) 
                 margin: "0 auto",
             }}
         >
-            {courses.map((course, index) => (
+                        {courses.map((course, index) => (
                 <div
                     key={course.id}
                     className={styles.courseLink}
@@ -106,14 +78,33 @@ function CoursesGrid({ resource }: { resource: { read: () => Array<Course> } }) 
 }
 
 function RouteComponent() {
-    const courseResource = useMemo(() => createResource(transformCourses()), []);   
+    const { data, refetch, error, isFetching } = useQuery(coursesQueryOptions);
+        const courses = useMemo<Array<Course>>(
+            () => data.map((c) => ({ id: c.id, name: c.course_name })),
+            [data]
+        );
 
-  return (
-    <main className={styles.main}>
-      <h1 style={{ margin: "0 auto", maxWidth: 1400 }}>Courses</h1>
-      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading courses…</p>}>
-        <CoursesGrid resource={courseResource} />
-      </Suspense>
-    </main>
-  );
+    if (isFetching) return <div style={{ textAlign: 'center' }}>Loading…</div>;
+    if (error) return <div>Error: {error instanceof Error ? error.message : String(error)}</div>;
+
+        return (
+            <div>
+                <nav>
+                    <ul>
+                                    <li>
+                                        <Link to="/courses/manage">Manage Courses</Link>
+                                    </li>
+                    </ul>
+                </nav>
+
+                <main className={styles.main}>
+                    <h1 style={{ margin: "0 auto", maxWidth: 1400 }}>Courses</h1>
+                    <CoursesGrid courses={courses} />
+                </main>
+
+                <div style={{ marginTop: '1rem' }}>
+                    <button onClick={() => refetch()}>Refetch</button>
+                </div>
+            </div>
+        );
 }
