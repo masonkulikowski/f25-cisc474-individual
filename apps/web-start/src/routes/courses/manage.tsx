@@ -1,18 +1,18 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { backendFetcher } from '../../integrations/fetcher';
 import type { CourseOut } from '@repo/api/courses';
 
-const coursesQueryOptions = {
+const coursesQueryOptions = queryOptions({
   queryKey: ['courses'],
   queryFn: backendFetcher<Array<CourseOut>>('/courses'),
-};
+});
 
 export const Route = createFileRoute('/courses/manage')({
   component: RouteComponent,
   loader: ({ context: { queryClient } }) => {
-    queryClient.ensureQueryData(coursesQueryOptions);
+    return queryClient.ensureQueryData(coursesQueryOptions);
   },
 });
 
@@ -24,7 +24,7 @@ type CourseFormData = {
 
 function RouteComponent() {
   const queryClient = useQueryClient();
-  const { data: courses, isLoading, error } = useQuery(coursesQueryOptions);
+  const { data: courses } = useSuspenseQuery(coursesQueryOptions);
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<CourseOut | null>(null);
@@ -133,9 +133,6 @@ function RouteComponent() {
     }
   };
 
-  if (isLoading) return <div>Loading courses...</div>;
-  if (error) return <div>Error loading courses: {error instanceof Error ? error.message : String(error)}</div>;
-  if (!courses) return <div>No courses data available</div>;
 
   return (
     <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>

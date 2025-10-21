@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const FRONTEND_URL = process.env.FRONTEND_URL_2;
+  const FRONTEND_URL = process.env.FRONTEND_URL;
 
   app.enableCors({
     origin: (origin, callback) => {
@@ -14,9 +14,9 @@ async function bootstrap() {
       }
       return callback(new Error('CORS policy violation'), false);
     },
-    methods: ['GET', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
-    credentials: false
+    credentials: false,
   });
   const port = process.env.PORT || 3000;
   const host = process.env.HOST || undefined;

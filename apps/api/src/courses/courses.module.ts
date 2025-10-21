@@ -1,15 +1,6 @@
-import { Controller, Get, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { CourseService } from './courses.service';
-
-@Controller('courses')
-export class CoursesController {
-  constructor(private readonly courseService: CourseService) {}
-
-  @Get()
-  async findAll() {
-    return this.courseService.findAll();
-  }
-}
+import { CoursesController } from './courses.controller';
 
 @Module({
   controllers: [CoursesController],
