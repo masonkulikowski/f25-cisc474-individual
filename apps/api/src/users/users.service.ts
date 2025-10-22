@@ -18,6 +18,10 @@ export class UserService {
     return this.prisma.users.findMany();
   }
 
+  async findOne(id: string) {
+    return this.prisma.users.findFirst({ where: { id } });
+  }
+
   async findAllByUuid(uuid: string): Promise<Users[]> {
     return this.prisma.users.findMany({
       where: { id: uuid },

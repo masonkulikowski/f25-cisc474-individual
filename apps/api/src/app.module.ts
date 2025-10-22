@@ -10,9 +10,10 @@ import { CommentsModule } from './comments/comments.module';
 import { PrismaModule } from './prisma.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [LinksModule, UsersModule, CoursesModule, AssignmentsModule, SubmissionsModule, SectionsModule, CommentsModule, PrismaModule],
+  imports: [LinksModule, UsersModule, CoursesModule, AssignmentsModule, SubmissionsModule, SectionsModule, CommentsModule, PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
