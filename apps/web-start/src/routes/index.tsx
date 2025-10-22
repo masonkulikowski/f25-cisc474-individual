@@ -87,7 +87,6 @@ function RouteComponent() {
             <main style={{ padding: 40 }}>
                 <p>Please sign in to continue.</p>
                 <LoginButton />
-
             </main>
         );
     }
