@@ -1,24 +1,16 @@
 "use client";
 
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from "react";
-import { backendFetcher } from "../integrations/fetcher";
+import { useAuth0 } from '@auth0/auth0-react';
+import { useApiQuery } from '../integrations/api';
+import LoginButton from '../components/loginButton';
 import styles from "./page.module.css";
 import type { CourseOut } from "@repo/api/courses";
 
 
-const coursesQueryOptions = {
-    queryKey: ['courses'],
-    queryFn: backendFetcher<Array<CourseOut>>(`/courses`),
-    initialData: [],
-}
-
 export const Route = createFileRoute('/')({
-  component: RouteComponent,
-  loader: ({ context: { queryClient } }) => {
-    queryClient.ensureQueryData(coursesQueryOptions);
-  }
+    component: RouteComponent,
 });
 
 type Course = {
@@ -78,33 +70,49 @@ function CoursesGrid({ courses }: { courses: Array<Course> }) {
 }
 
 function RouteComponent() {
-    const { data, refetch, error, isFetching } = useQuery(coursesQueryOptions);
-        const courses = useMemo<Array<Course>>(
-            () => data.map((c) => ({ id: c.id, name: c.course_name })),
-            [data]
+    const { isAuthenticated, isLoading: authLoading } = useAuth0();
+
+    const { data, refetch, error, isFetching } = useApiQuery<Array<CourseOut>>([
+        'courses',
+    ], '/courses');
+
+    const courses = useMemo<Array<Course>>(
+        () => (data ?? []).map((c: CourseOut) => ({ id: c.id, name: c.course_name })),
+        [data]
+    );
+    if (authLoading) return <div style={{ textAlign: 'center' }}>Loading…</div>;
+
+    if (!isAuthenticated) {
+        return (
+            <main style={{ padding: 40 }}>
+                <p>Please sign in to continue.</p>
+                <LoginButton />
+
+            </main>
         );
+    }
 
     if (isFetching) return <div style={{ textAlign: 'center' }}>Loading…</div>;
     if (error) return <div>Error: {error instanceof Error ? error.message : String(error)}</div>;
 
-        return (
-            <div>
-                <nav>
-                    <ul>
-                                    <li>
-                                        <Link to="/courses/manage">Manage Courses</Link>
-                                    </li>
-                    </ul>
-                </nav>
+    return (
+        <div>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/courses/manage">Manage Courses</Link>
+                    </li>
+                </ul>
+            </nav>
 
-                <main className={styles.main}>
-                    <h1 style={{ margin: "0 auto", maxWidth: 1400 }}>Courses</h1>
-                    <CoursesGrid courses={courses} />
-                </main>
+            <main className={styles.main}>
+                <h1 style={{ margin: "0 auto", maxWidth: 1400 }}>Courses</h1>
+                <CoursesGrid courses={courses} />
+            </main>
 
-                <div style={{ marginTop: '1rem' }}>
-                    <button onClick={() => refetch()}>Refetch</button>
-                </div>
+            <div style={{ marginTop: '1rem' }}>
+                <button onClick={() => refetch()}>Refetch</button>
             </div>
-        );
+        </div>
+    );
 }

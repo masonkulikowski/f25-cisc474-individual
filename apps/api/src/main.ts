@@ -9,14 +9,12 @@ async function bootstrap() {
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
-      if (FRONTEND_URL && origin === FRONTEND_URL) {
-        return callback(null, true);
-      }
+      if (FRONTEND_URL && origin === FRONTEND_URL) return callback(null, true);
       return callback(new Error('CORS policy violation'), false);
     },
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
-    credentials: false,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   });
   const port = process.env.PORT || 3000;
   const host = process.env.HOST || undefined;

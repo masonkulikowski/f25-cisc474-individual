@@ -25,7 +25,6 @@ async function main() {
         first_name: first,
         last_name: last,
         email: uniqueEmail(first, last),
-        password: faker.internet.password(),
       },
     });
     professors.push(user);
@@ -40,7 +39,6 @@ async function main() {
         first_name: first,
         last_name: last,
         email: uniqueEmail(first, last),
-        password: faker.internet.password(),
       },
     });
     students.push(user);
