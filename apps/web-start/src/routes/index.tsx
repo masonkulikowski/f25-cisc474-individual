@@ -7,6 +7,7 @@ import { useApiQuery } from '../integrations/api';
 import LoginButton from '../components/loginButton';
 import styles from "./page.module.css";
 import type { CourseOut } from "@repo/api/courses";
+import LogoutButton from '../components/logoutButton';
 
 
 export const Route = createFileRoute('/')({
@@ -112,6 +113,7 @@ function RouteComponent() {
             <div style={{ marginTop: '1rem' }}>
                 <button onClick={() => refetch()}>Refetch</button>
             </div>
+            <LogoutButton />
         </div>
     );
 }
