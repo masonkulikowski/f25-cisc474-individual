@@ -1,7 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
-import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { backendFetcher } from '../../integrations/fetcher';
+import { useApiMutation, useCurrentUser } from '../../integrations/api';
 import type { CourseOut } from '@repo/api/courses';
 
 const coursesQueryOptions = queryOptions({
@@ -23,8 +24,8 @@ type CourseFormData = {
 };
 
 function RouteComponent() {
-  const queryClient = useQueryClient();
   const { data: courses } = useSuspenseQuery(coursesQueryOptions);
+  const { data: currentUser } = useCurrentUser();
   
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<CourseOut | null>(null);
@@ -34,58 +35,20 @@ function RouteComponent() {
     users_id: '',
   });
 
-  const createMutation = useMutation({
-    mutationFn: async (data: CourseFormData) => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/courses`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        }
-      );
-      if (!response.ok) throw new Error('Failed to create course');
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['courses'] });
-      closeForm();
-    },
+  const createMutation = useApiMutation<CourseFormData, CourseOut>({
+    path: '/courses',
+    method: 'POST',
+    invalidateKeys: [['courses']],
   });
 
-  const updateMutation = useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: Partial<CourseFormData> }) => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/courses/${id}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        }
-      );
-      if (!response.ok) throw new Error('Failed to update course');
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['courses'] });
-      closeForm();
-    },
+  const updateMutation = useApiMutation<{ id: string; data: Partial<CourseFormData> }, CourseOut>({
+    endpoint: (variables) => ({ path: `/courses/${variables.id}`, method: 'PATCH' }),
+    invalidateKeys: [['courses']],
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/courses/${id}`,
-        {
-          method: 'DELETE',
-        }
-      );
-      if (!response.ok) throw new Error('Failed to delete course');
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['courses'] });
-    },
+  const deleteMutation = useApiMutation<{ id: string }, unknown>({
+    endpoint: (vars) => ({ path: `/courses/${vars.id}`, method: 'DELETE' }),
+    invalidateKeys: [['courses']],
   });
 
   const openCreateForm = () => {
@@ -93,7 +56,7 @@ function RouteComponent() {
     setFormData({
       course_name: '',
       course_desc: '',
-      users_id: '',
+      users_id: currentUser?.id ?? '',
     });
     setIsFormOpen(true);
   };
@@ -123,13 +86,15 @@ function RouteComponent() {
     if (editingCourse) {
       updateMutation.mutate({ id: editingCourse.id, data: formData });
     } else {
-      createMutation.mutate(formData);
+      // ensure we use the authenticated user's id when available
+      const payload = { ...formData, users_id: currentUser?.id ?? formData.users_id };
+      createMutation.mutate(payload);
     }
   };
 
   const handleDelete = (id: string, name: string) => {
     if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
-      deleteMutation.mutate(id);
+      deleteMutation.mutate({ id });
     }
   };
 
