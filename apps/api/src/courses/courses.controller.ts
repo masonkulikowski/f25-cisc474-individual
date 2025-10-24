@@ -14,6 +14,7 @@ export class CoursesController {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll(@CurrentUser() user: JwtUser) {
+    console.log('Current User:', user);
     return this.courseService.findAll();
   }
 

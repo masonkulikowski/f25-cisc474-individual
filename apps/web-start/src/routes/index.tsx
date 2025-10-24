@@ -5,9 +5,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useApiQuery } from '../integrations/api';
 import LoginButton from '../components/loginButton';
+import LogoutButton from '../components/logoutButton';
 import styles from "./page.module.css";
 import type { CourseOut } from "@repo/api/courses";
-import LogoutButton from '../components/logoutButton';
 
 
 export const Route = createFileRoute('/')({

@@ -41,8 +41,8 @@ function RouteComponent() {
     invalidateKeys: [['courses']],
   });
 
-  const updateMutation = useApiMutation<{ id: string; data: Partial<CourseFormData> }, CourseOut>({
-    endpoint: (variables) => ({ path: `/courses/${variables.id}`, method: 'PATCH' }),
+  const updateMutation = useApiMutation<Partial<CourseFormData>, CourseOut>({
+    endpoint: () => ({ path: `/courses/${editingCourse?.id ?? ''}`, method: 'PATCH' }),
     invalidateKeys: [['courses']],
   });
 
@@ -84,7 +84,7 @@ function RouteComponent() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editingCourse) {
-      updateMutation.mutate({ id: editingCourse.id, data: formData });
+      updateMutation.mutate(formData);
     } else {
       // ensure we use the authenticated user's id when available
       const payload = { ...formData, users_id: currentUser?.id ?? formData.users_id };

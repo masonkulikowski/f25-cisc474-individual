@@ -29,14 +29,14 @@ function splitSub(sub: string) {
 }
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly prisma: PrismaService) {
     super({
       secretOrKeyProvider: passportJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `${process.env.AUTH0_ISSUER_URL}.well-known/jwks.json`,
+        jwksUri: new URL('.well-known/jwks.json', process.env.AUTH0_ISSUER_URL).toString(),
       }),
 
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
